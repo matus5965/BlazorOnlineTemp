@@ -32,16 +32,11 @@ jobs:
         with:
           dotnet-version: 9.0.x
       - name: Prepare Blazor WASM for GitHub Pages
-        uses: na1307/blazor-github-pages@v4
-        id: prepare
-        with:
-          project-path: Demo.BlazorWasmApp/Demo.BlazorWasmApp.csproj
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+        run: dotnet publish Demo.BlazorWasmApp/Demo.BlazorWasmApp.csproj -c Release -o publish
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ${{ steps.prepare.outputs.wwwroot-path }}
+          path: publish/wwwroot
 
   # Deployment job
   deploy:
